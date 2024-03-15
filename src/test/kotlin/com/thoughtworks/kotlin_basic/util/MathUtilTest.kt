@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 class MathUtilTest {
     @Test
-    fun add() {
+    fun `1 + 2 = 3`() {
         val mathUtil = MathUtil()
         assertEquals(3, mathUtil.add(1, 2))
     }

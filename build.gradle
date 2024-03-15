@@ -21,8 +21,6 @@ dependencies {
     testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
     // 对Kotlin更友好的Mocking工具
     testImplementation 'io.mockk:mockk:1.10.6'
-    // 如果你使用Mockito
-    testImplementation 'org.mockito:mockito-core:3.11.2'
     // Use the JUnit 5 integration.
     testImplementation "org.junit.jupiter:junit-jupiter:5.8.0"
 
