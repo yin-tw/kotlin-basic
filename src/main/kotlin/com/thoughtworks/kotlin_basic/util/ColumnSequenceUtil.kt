@@ -6,6 +6,7 @@ class ColumnSequenceUtil {
     fun numberToColumnIndices(columnNumber: Int) = when {
         columnNumber <= 26 -> calculateOneChar(columnNumber).toString()
         columnNumber <= 702 -> calculateTwoChar(columnNumber)
+        columnNumber <= 18279 -> calculateThreeChar(columnNumber)
         else -> throw IllegalArgumentException("Input must be between 1 and 18279")
     }
 
@@ -21,6 +22,17 @@ class ColumnSequenceUtil {
         if (secondCharNumber == 0) firstCharNumber -= 1
 
         return "${calculateOneChar(firstCharNumber)}${calculateOneChar(secondCharNumber)}"
+    }
+
+    private fun calculateThreeChar (columnNumber: Int):String {
+        val multipleOf676 = columnNumber / 676
+
+        var firstCharNumber = if (multipleOf676  > 26 ) multipleOf676 % 26 else multipleOf676
+        val secondAndThirdChar = calculateTwoChar(columnNumber)
+
+        if (secondAndThirdChar[0] == 'Z') firstCharNumber -= 1
+
+        return "${calculateOneChar(firstCharNumber)}${secondAndThirdChar}"
     }
 
 }
