@@ -50,9 +50,9 @@ class ColumnSequenceUtilTest {
 
         assertEquals(true, result.isArrayOf<String>())
         assertEquals(3, result.size)
-        assertEquals("Z", result.get(0))
-        assertEquals("AA", result.get(1))
-        assertEquals("AB", result.get(2))
+        assertEquals("Z", result[0])
+        assertEquals("AA", result[1])
+        assertEquals("AB", result[2])
     }
 
     @Test
@@ -61,8 +61,8 @@ class ColumnSequenceUtilTest {
 
         assertEquals(true, result.isArrayOf<String>())
         assertEquals(2, result.size)
-        assertEquals("A", result.get(0))
-        assertEquals("B", result.get(1))
+        assertEquals("A", result[0])
+        assertEquals("B", result[1])
     }
 
     @Test
