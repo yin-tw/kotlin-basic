@@ -6,7 +6,7 @@ class ColumnSequenceUtil {
     fun numberSequenceToColumnIndexLabels(startingSequence: Int, count: Int): Array<String>{
         val columnIndexLabels = arrayListOf<String>()
 
-        if (startingSequence + count > 18278) throw IllegalArgumentException("Starting and ending sequence numbers must be between 1 and 18278")
+        if (startingSequence + count - 1 > 18278) throw IllegalArgumentException("Starting and ending sequence numbers must be between 1 and 18278")
 
         for (i in 0..count - 1) {
                 columnIndexLabels.add(numberToColumnIndices(startingSequence + i))
