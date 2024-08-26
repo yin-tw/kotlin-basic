@@ -3,11 +3,23 @@ package com.thoughtworks.kotlin_basic.util
 class ColumnSequenceUtil {
     private val alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
+    fun numberSequenceToColumnIndexLabels(startingSequence: Int, count: Int): Array<String>{
+        val columnIndexLabels = arrayListOf<String>()
+
+        if (startingSequence + count > 18278) throw IllegalArgumentException("Starting and ending sequence numbers must be between 1 and 18278")
+
+        for (i in 0..count - 1) {
+                columnIndexLabels.add(numberToColumnIndices(startingSequence + i))
+        }
+
+        return columnIndexLabels.toTypedArray()
+    }
+
     fun numberToColumnIndices(columnNumber: Int) = when {
         columnNumber <= 26 -> calculateOneChar(columnNumber).toString()
         columnNumber <= 702 -> calculateTwoChar(columnNumber)
-        columnNumber <= 18279 -> calculateThreeChar(columnNumber)
-        else -> throw IllegalArgumentException("Input must be between 1 and 18279")
+        columnNumber <= 18278 -> calculateThreeChar(columnNumber)
+        else -> throw IllegalArgumentException("Input must be between 1 and 18278")
     }
 
     private fun calculateOneChar(columnNumber: Int): Char = if (columnNumber == 0) 'Z' else alphabet[columnNumber - 1]

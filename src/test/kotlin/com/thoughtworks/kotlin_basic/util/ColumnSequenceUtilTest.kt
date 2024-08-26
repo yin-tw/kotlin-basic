@@ -12,13 +12,8 @@ class ColumnSequenceUtilTest {
     @Test
     fun `Converting 702 to Column Indices should return ZZ`() {
         val result = columnSequenceUtil.numberToColumnIndices(702)
-        assertEquals("ZZ", result )
-    }
-
-    @Test
-    fun `Converting 702 to Column Indices should not return AZ`() {
-        val result = columnSequenceUtil.numberToColumnIndices(702)
         assertNotEquals("AZ", result )
+        assertEquals("ZZ", result )
     }
 
     @Test
@@ -36,13 +31,8 @@ class ColumnSequenceUtilTest {
     @Test
     fun `Converting 18278 to Column Indices should return ZZZ`() {
         val result = columnSequenceUtil.numberToColumnIndices(18278)
-        assertEquals("ZZZ", result )
-    }
-
-    @Test
-    fun `Converting 18278 to Column Indices should not return AZZ`() {
-        val result = columnSequenceUtil.numberToColumnIndices(18278)
         assertNotEquals("AZZ", result )
+        assertEquals("ZZZ", result )
     }
 
     @Test
@@ -51,7 +41,37 @@ class ColumnSequenceUtilTest {
             columnSequenceUtil.numberToColumnIndices(18280)
         }
 
-        assertEquals("Input must be between 1 and 18279", exception.message)
+        assertEquals("Input must be between 1 and 18278", exception.message)
+    }
+
+    @Test
+    fun `Converting starting sequence number 26 and for 3 results should return labels of Z, AA, AB`() {
+        val result = columnSequenceUtil.numberSequenceToColumnIndexLabels(26, 3)
+
+        assertEquals(true, result.isArrayOf<String>())
+        assertEquals(3, result.size)
+        assertEquals("Z", result.get(0))
+        assertEquals("AA", result.get(1))
+        assertEquals("AB", result.get(2))
+    }
+
+    @Test
+    fun `Converting starting sequence number 1 and for 2 results should return labels of A, B`() {
+        val result = columnSequenceUtil.numberSequenceToColumnIndexLabels(1, 2)
+
+        assertEquals(true, result.isArrayOf<String>())
+        assertEquals(2, result.size)
+        assertEquals("A", result.get(0))
+        assertEquals("B", result.get(1))
+    }
+
+    @Test
+    fun `Converting starting sequence number 18278 and for 2 results should throw exception`() {
+        val exception = assertThrows(IllegalArgumentException::class.java) {
+            columnSequenceUtil.numberSequenceToColumnIndexLabels(18278, 2)
+        }
+
+        assertEquals("Starting and ending sequence numbers must be between 1 and 18278", exception.message)
     }
 
 }
