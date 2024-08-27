@@ -9,12 +9,12 @@ It consists of two public functions
 
 This function allows you to convert number sequence to column index labels.
 
-The function takes two parameters ( both greater than zero) : 
-    - starting sequence number and 
-    - count of results (i.e. number of labels you need)
+The function takes two parameters ( both greater than zero) 
+- starting sequence number and 
+- count of results (i.e. number of labels you need)
 
 Function returns 
-    - a string array representing the sequence of alphabetical column labels starting from the given starting sequence number.
+- a string array representing the sequence of alphabetical column labels starting from the given starting sequence number.
 
 Example:
 Parameters (1, 1) should return [A].
