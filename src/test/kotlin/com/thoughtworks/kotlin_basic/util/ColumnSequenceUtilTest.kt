@@ -66,12 +66,39 @@ class ColumnSequenceUtilTest {
     }
 
     @Test
+    fun `Converting starting sequence number 18278 and for 1 results should return label AAA`() {
+        val result = columnSequenceUtil.numberSequenceToColumnIndexLabels(18278, 1)
+
+        assertEquals(true, result.isArrayOf<String>())
+        assertEquals(1, result.size)
+        assertEquals("ZZZ", result[0])
+    }
+
+    @Test
     fun `Converting starting sequence number 18278 and for 2 results should throw exception`() {
         val exception = assertThrows(IllegalArgumentException::class.java) {
             columnSequenceUtil.numberSequenceToColumnIndexLabels(18278, 2)
         }
 
         assertEquals("Starting and ending sequence numbers must be between 1 and 18278", exception.message)
+    }
+
+    @Test
+    fun `Converting starting sequence number -2 and for 2 results should throw exception`() {
+        val exception = assertThrows(IllegalArgumentException::class.java) {
+            columnSequenceUtil.numberSequenceToColumnIndexLabels(-2, 2)
+        }
+
+        assertEquals("Starting sequence number and result count must be greater than zero", exception.message)
+    }
+
+    @Test
+    fun `Converting starting sequence number 55 and for -2 results should throw exception`() {
+        val exception = assertThrows(IllegalArgumentException::class.java) {
+            columnSequenceUtil.numberSequenceToColumnIndexLabels(55, -2)
+        }
+
+        assertEquals("Starting sequence number and result count must be greater than zero", exception.message)
     }
 
 }
