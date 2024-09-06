@@ -38,4 +38,50 @@ class ProductService( private val productApi: ProductApi = RetrofitClient.getCli
 
         return inventories
     }
+
+    fun fetchProductInventories(): List<ProductInventory> {
+        val products: List<Product>
+        val inventories: List<Inventory>
+        val productInventories = mutableListOf<ProductInventory>()
+
+        try {
+            products = fetchProducts()
+            inventories = fetchInventories()
+        } catch (e: Exception ) {
+            throw Exception(e.message)
+        } catch (e: IOException) {
+            throw IOException(e.message)
+        }
+
+        for (product in products) {
+            var stockInventory = 0
+            var productPrice = product.price
+
+            for ( inventory in inventories) {
+                if (inventory.sku == product.sku) {
+                    stockInventory += inventory.quantity
+                }
+            }
+
+            if (product.type == "HIGH_DEMAND") {
+                when (stockInventory){
+                    in 31..100 -> productPrice *= 1.2
+                    in 0..30 -> productPrice *= 1.5
+                }
+            }
+
+
+            val productInventory = ProductInventory(
+                product.sku,
+                product.name,
+                productPrice,
+                stockInventory,
+                product.imageUrl
+                )
+
+            productInventories.add(productInventory)
+        }
+
+        return productInventories
+    }
 }
