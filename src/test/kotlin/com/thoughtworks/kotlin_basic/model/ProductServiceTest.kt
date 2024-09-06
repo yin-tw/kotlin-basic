@@ -14,7 +14,7 @@ class ProductServiceTest {
     val productService = ProductService(productApi)
 
     @Test
-    fun `get products when product Api call is successful`() {
+    fun `get products when fetch products api call is successful`() {
         val mockProducts = listOf(Product("mockSKU","mockName", 100.00, "mockType", "mockURL"))
         every { productApi.getProducts().execute() } returns Response.success(mockProducts)
 
@@ -23,22 +23,32 @@ class ProductServiceTest {
         assertEquals( mockProducts, results)
     }
 
+
     @Test
-    fun `throws Exception with message when product Api call returns empty response`() {
+    fun `get inventories when fetch inventories api call is successful`() {
+        val mockInventories = listOf(Inventory("mockSKU","mockZone", 10))
+        every { productApi.getInventories().execute() } returns Response.success(mockInventories)
+
+        val results = productService.fetchInventories()
+
+        assertEquals( mockInventories, results)
+    }
+
+    @Test
+    fun `throws Exception with message when fetch products api call returns empty response`() {
         every { productApi.getProducts().execute() } returns Response.success(null)
 
         val exception = assertThrows<Exception> { productService.fetchProducts() }
 
-        assertEquals("Empty response from product API", exception.message)
+        assertEquals("Empty product response from product API", exception.message)
     }
 
     @Test
-    fun `throws IO exception when product Api call throws IO exception`() {
+    fun `throws IO exception when fetch products api call throws IO exception`() {
         every { productApi.getProducts().execute() } throws IOException("Unable to connect to host")
 
         val exception = assertThrows<IOException> { productService.fetchProducts() }
 
         assertEquals("IOException caught for product API: Unable to connect to host", exception.message)
     }
-
 }

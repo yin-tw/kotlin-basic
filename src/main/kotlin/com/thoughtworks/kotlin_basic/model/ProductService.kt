@@ -10,7 +10,7 @@ class ProductService( private val productApi: ProductApi = RetrofitClient.getCli
             val productResponse = productApi.getProducts().execute()
 
             if (productResponse.isSuccessful) {
-                products = productResponse.body() ?: throw Exception("Empty response from product API")
+                products = productResponse.body() ?: throw Exception("Empty product response from product API")
             } else {
                 throw Exception(productResponse.errorBody().toString())
             }
@@ -19,5 +19,23 @@ class ProductService( private val productApi: ProductApi = RetrofitClient.getCli
         }
 
         return products
+    }
+
+    fun fetchInventories(): List<Inventory> {
+        val inventories: List<Inventory>
+
+        try {
+            val inventoryResponse = productApi.getInventories().execute()
+
+            if (inventoryResponse.isSuccessful) {
+                inventories = inventoryResponse.body() ?: throw Exception("Empty inventory response from product API")
+            } else {
+                throw Exception(inventoryResponse.errorBody().toString())
+            }
+        } catch (e: IOException) {
+            throw IOException("IOException caught for product API: ${e.message}")
+        }
+
+        return inventories
     }
 }

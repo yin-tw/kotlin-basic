@@ -32,8 +32,8 @@ class ProductApiTest {
 
         val response = api.getProducts().execute()
 
-        assertEquals(response.code(),200)
-        assertEquals(response.body(), mockProductList)
+        assertEquals(200, response.code())
+        assertEquals(mockProductList, response.body())
     }
 
     @Test
@@ -44,6 +44,33 @@ class ProductApiTest {
         server.enqueue(mockErrorResponse)
 
         val response = api.getProducts().execute()
+
+        assertEquals(response.code(), 400)
+        assertEquals(response.message(), "Client Error")
+    }
+
+    @Test
+    fun `get Inventories, 200 response returns list of inventory`() {
+        val mockInventoryList = listOf(Inventory("mockSKU","mockZone", 10))
+        val mockInventoryJson = GsonBuilder().create().toJson(mockInventoryList)
+        val mockSuccessResponse = MockResponse().setBody(mockInventoryJson)
+        server.enqueue(mockSuccessResponse)
+
+        val response = api.getInventories().execute()
+
+        assertEquals(200, response.code())
+        assertEquals(mockInventoryList, response.body())
+    }
+
+
+    @Test
+    fun `get Inventories, 400 response returns client error`() {
+        val mockErrorResponse = MockResponse()
+            .setResponseCode(400)
+
+        server.enqueue(mockErrorResponse)
+
+        val response = api.getInventories().execute()
 
         assertEquals(response.code(), 400)
         assertEquals(response.message(), "Client Error")
